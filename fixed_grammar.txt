@@ -1,0 +1,130 @@
+
+S -> defs .
+
+defs -> def defs' .
+defs' ->  ; def defs' .
+defs' ->  .
+
+
+def -> type_def .
+def -> function_def .
+def -> variable_def .
+
+type_def -> typ id : type .
+
+function_def -> fun id ( params ) : type = expr .
+
+variable_def -> var id : type .
+
+type -> id .
+type -> log .
+type -> integer .
+type -> string .
+type -> arr [ int_const ] type .
+
+
+
+
+
+
+params -> param params' .
+params' ->  , param params' .
+params' ->  .
+
+
+param -> id : type .
+
+expr -> log_ior_expr expr'' .
+
+expr'' ->  .
+expr'' ->  { WHERE defs } .
+
+log_ior_expr -> log_and_expr log_ior_expr' .
+log_ior_expr' -> ali log_and_expr log_ior_expr'  .
+
+log_ior_expr' -> .
+
+
+log_and_expr -> cmp_expr log_and_expr' .
+
+log_and_expr' -> & cmp_expr log_and_expr' .
+
+log_and_expr' ->  .
+
+
+
+
+
+
+
+
+cmp_expr -> add_expr cmp_expr' .
+cmp_expr' ->  == add_expr .
+cmp_expr' ->  != add_expr .
+cmp_expr' ->  <= add_expr .
+cmp_expr' ->  >= add_expr .
+cmp_expr' ->  < add_expr .
+cmp_expr' ->  > add_expr .
+cmp_expr' ->  .
+
+
+add_expr -> mul_expr add_expr' .
+add_expr' ->  + mul_expr add_expr' .
+add_expr' ->  - mul_expr add_expr' .
+add_expr' -> .
+
+
+mul_expr -> prefix_expr mul_expr' .
+
+mul_expr' -> * prefix_expr mul_expr' .
+mul_expr' -> / prefix_expr mul_expr' .
+mul_expr' -> % prefix_expr mul_expr' .
+mul_expr' -> .
+
+prefix_expr -> + prefix_expr .
+prefix_expr -> - prefix_expr .
+prefix_expr -> ! prefix_expr .
+prefix_expr -> postfix_expr .
+
+postfix_expr -> atom_expr postfix_expr' .
+
+postfix_expr' -> [ expr ] postfix_expr' .
+postfix_expr' ->  .
+
+
+
+
+
+
+
+
+
+
+atom_expr -> log_constant .
+atom_expr -> int_constant .
+atom_expr -> str_constant .
+
+atom_expr -> id atom_expr' .
+
+atom_expr' ->  ( exprs ) .
+atom_expr' -> .
+
+atom_expr -> { atom_expr'' .
+
+atom_expr'' ->  expr = expr } .
+
+atom_expr'' -> if expr then expr atom_expr''' .
+atom_expr''' ->   } .
+atom_expr''' ->   else expr } .
+
+atom_expr'' ->  while expr : expr } .
+atom_expr'' ->  for id = expr , expr , expr : expr } .
+
+atom_expr -> ( exprs ) .
+
+exprs -> expr exprs' .
+exprs' -> , expr exprs' .
+exprs' ->  .
+
+
+
